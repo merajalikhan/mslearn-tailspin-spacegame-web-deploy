@@ -1,0 +1,17 @@
+parameters:
+  appName:  '$(WebAppNameDev)'
+
+variables:
+    - group: Release
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: drop
+          - task: AzureWebApp@1
+            displayName: 'Azure App Service Deploy: website'
+            inputs:
+              azureSubscription: 'Resource Manager - Mk- Space Game'
+              appName: '$({parameters.appName]})'
+              package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip'
