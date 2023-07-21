@@ -6,5 +6,5 @@ steps:
   displayName: 'Azure App Service Deploy: website'
   inputs:
     azureSubscription: 'Resource Manager - Mk- Space Game'
-    appName: '$({parameters.appName]})'
+    appName: 'mk-space-game-web-dev-1107'
     package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip'
