@@ -88,10 +88,16 @@ stages:
     pool:
       vmImage: 'ubuntu-20.04'
     environment: dev
-  - template: templates/build.yml
-    parameters:
-      appName: '$(WebAppNameDev)'   
-      
+    variables:
+    - group: Release
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: drop
+          - template: templates/build.yml
+
 - stage: 'Test'
   displayName: 'Deploy to the test environment'
   dependsOn: Dev
