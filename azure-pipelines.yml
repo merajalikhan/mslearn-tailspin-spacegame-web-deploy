@@ -97,9 +97,9 @@ stages:
           steps:
           - download: current
             artifact: drop
-          - template: templates/build.yml
+          - template: templates/deploy.yml
             parameters:
-              appName: '$(WebAppNameTest)'
+              appName: '$(WebAppNameDev)'
 
 - stage: 'Test'
   displayName: 'Deploy to the test environment'
@@ -118,13 +118,9 @@ stages:
           steps:
           - download: current
             artifact: drop
-          - task: AzureWebApp@1
-            displayName: 'Azure App Service Deploy: website'
-            inputs:
-              azureSubscription: 'Resource Manager - Mk- Space Game'
-              appName: '$(WebAppNameTest)'
-              package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/*.zip'   
-
+          - template: templates/deploy.yml
+            parameters:
+              appName: '$(WebAppNameTest)'   
 - stage: 'Staging'
   displayName: 'Deploy to the staging environment'
   dependsOn: Test
