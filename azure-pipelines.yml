@@ -97,6 +97,8 @@ stages:
           - download: current
             artifact: drop
           - template: templates/build.yml
+            parameters:
+              appName: '$(WebAppNameDev)'
 
 - stage: 'Test'
   displayName: 'Deploy to the test environment'
