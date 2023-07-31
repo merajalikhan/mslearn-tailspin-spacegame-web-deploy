@@ -67,7 +67,7 @@ stages:
 
 - stage: 'Provision'
   displayName: 'Create Infrastructure'
-  dependsOn: Build    
+  #dependsOn: Build    
   jobs: 
     - job: 'Provision'
       displayName: 'Provision job'
@@ -75,23 +75,49 @@ stages:
         vmImage: 'ubuntu-20.04'
       steps:
         - checkout: self
+        #- task: AzureCLI@2
+        #  displayName: Create VM using az cli
+        #  inputs:
+        #    azureSubscription: 'MAKHANX'
+        #    scriptType: 'bash'
+        #    scriptLocation: 'inlineScript'
+        #    inlineScript: |
+        #      az vm create \
+        #          --name MKTESTVN1 \
+        #          --resource-group mk-space-game-rg \
+        #          --image canonical:0001-com-ubuntu-server-focal:20_04-lts:latest \
+        #          --size Standard_DS2_v2 \
+        #          --admin-username azureuser \
+        #          --generate-ssh-keys
+        #      sudo apt-get update   
+        #      curl https://raw.githubusercontent.com/MicrosoftDocs/mslearn-tailspin-spacegame-web/main/.agent-tools/build-tools.sh > build-tools.sh
+        #      cat build-tools.sh
+
         - task: AzureCLI@2
-          displayName: Create VM using az cli
+          displayName: Create app service plan using cli
           inputs:
             azureSubscription: 'MAKHANX'
             scriptType: 'bash'
             scriptLocation: 'inlineScript'
             inlineScript: |
-              az vm create \
-                  --name MKTESTVN1 \
+                az appservice plan create \
+                  --name mk-space-game-asp \
                   --resource-group mk-space-game-rg \
-                  --image canonical:0001-com-ubuntu-server-focal:20_04-lts:latest \
-                  --size Standard_DS2_v2 \
-                  --admin-username azureuser \
-                  --generate-ssh-keys
-              sudo apt-get update   
-              curl https://raw.githubusercontent.com/MicrosoftDocs/mslearn-tailspin-spacegame-web/main/.agent-tools/build-tools.sh > build-tools.sh
-              cat build-tools.sh
+                  --sku F1 \
+                  --is-linux
+        
+        - task: AzureCLI@2
+          displayName: Create app web app using cli
+          inputs:
+            azureSubscription: 'MAKHANX'
+            scriptType: 'bash'
+            scriptLocation: 'inlineScript'
+            inlineScript: |
+                az webapp create \
+                    --name mk-space-game-786 \
+                    --resource-group mk-space-game-rg \
+                    --plan mk-space-game-asp \
+                    --runtime "DOTNET|6.0"
                   
 
 - stage: 'Deploy'
