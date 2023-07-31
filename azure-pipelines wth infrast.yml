@@ -93,18 +93,28 @@ stages:
         #      curl https://raw.githubusercontent.com/MicrosoftDocs/mslearn-tailspin-spacegame-web/main/.agent-tools/build-tools.sh > build-tools.sh
         #      cat build-tools.sh
 
-        - task: AzureCLI@2
-          displayName: Create app service plan using cli
-          inputs:
-            azureSubscription: 'MAKHANX'
-            scriptType: 'bash'
-            scriptLocation: 'inlineScript'
-            inlineScript: |
-                az appservice plan create \
-                  --name mk-space-game-asp \
-                  --resource-group mk-space-game-rg \
-                  --sku F1 \
-                  --is-linux
+        #- task: AzureCLI@2
+        #  displayName: Create app resource group using cli
+        #  inputs:
+        #    azureSubscription: 'MAKHANX'
+        #    scriptType: 'bash'
+        #    scriptLocation: 'inlineScript'
+        #    inlineScript: |
+        #        az group create 
+        #          --name mk-space-game-rg
+
+        #- task: AzureCLI@2
+        #  displayName: Create app service plan using cli
+        #  inputs:
+        #    azureSubscription: 'MAKHANX'
+        #    scriptType: 'bash'
+        #    scriptLocation: 'inlineScript'
+        #    inlineScript: |
+        #        az appservice plan create \
+        #          --name mk-space-game-asp \
+        #          --resource-group mk-space-game-rg \
+        #          --sku F1 \
+        #          --is-linux
         
         - task: AzureCLI@2
           displayName: Create app web app using cli
