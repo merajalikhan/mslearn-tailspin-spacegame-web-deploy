@@ -78,7 +78,7 @@ stages:
         - task: AzureCLI@2
           displayName: Create VM using az cli
           inputs:
-            azureSubscription: 'GERALEXGR'
+            azureSubscription: 'Resource Manager - MK- Space Game'
             scriptType: 'bash'
             scriptLocation: 'inlineScript'
             inlineScript: |
