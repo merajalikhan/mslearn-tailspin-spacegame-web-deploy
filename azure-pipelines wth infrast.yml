@@ -70,7 +70,7 @@ stages:
   dependsOn: Build    
   jobs: 
     - job: 'Provision'
-      displayName: 'Build job'
+      displayName: 'Provision job'
       pool:
         vmImage: 'ubuntu-20.04'
       steps:
@@ -78,7 +78,7 @@ stages:
         - task: AzureCLI@2
           displayName: Create VM using az cli
           inputs:
-            azureSubscription: 'Resource Manager - MK- Space Game'
+            azureSubscription: 'MAKHANX'
             scriptType: 'bash'
             scriptLocation: 'inlineScript'
             inlineScript: |
